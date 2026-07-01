@@ -3,7 +3,7 @@ name: debugging-xray-hero
 description: "A polished product screenshot scanned by an animated x-ray band that reveals the underlying component structure as glowing devtools-style bboxes and accessibility outlines. Drag the pointer, or let it auto-sweep — exactly the feeling of opening the inspector on production."
 metadata:
   author: "@ybouane"
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 ## How To Use This Skill

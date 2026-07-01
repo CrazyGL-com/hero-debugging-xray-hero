@@ -1,7 +1,7 @@
 {
   "name": "@crazygl/hero-debugging-xray-hero",
-  "version": "0.1.0",
-  "description": "A polished product screenshot scanned by an animated x-ray band that reveals the underlying component structure as glowing devtools-style bboxes and accessibility heatmaps. Three.js shader hero for observability, devtools and monitoring landing pages.",
+  "version": "0.1.1",
+  "description": "Debugging X-Ray — A polished product screenshot scanned by an animated x-ray band that reveals the underlying component structure as glowing devtools-style bboxes and accessibility outlines. Drag the pointer, or let it… A customizable CrazyGL animated hero section — WebGL, React, drop-in.",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -21,7 +21,7 @@
     "LICENSE"
   ],
   "dependencies": {
-    "@crazygl/core": "^0.1.0",
+    "@crazygl/core": "^0.1.1",
     "three": ">=0.160"
   },
   "peerDependencies": {
@@ -37,5 +37,33 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "keywords": [
+    "devtools",
+    "observability",
+    "monitoring",
+    "saas",
+    "screenshot",
+    "three",
+    "shader",
+    "reveal",
+    "x-ray",
+    "wireframe",
+    "debugging-xray-hero",
+    "crazygl",
+    "hero",
+    "hero-section",
+    "webgl",
+    "react",
+    "animation",
+    "ui",
+    "landing-page",
+    "interactive",
+    "frontend",
+    "component",
+    "canvas"
+  ],
+  "bugs": {
+    "url": "https://github.com/crazygl-com/hero-debugging-xray-hero/issues"
   }
 }
