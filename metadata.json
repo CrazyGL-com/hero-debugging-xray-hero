@@ -1,0 +1,381 @@
+{
+	"name": "Debugging X-Ray",
+	"slug": "debugging-xray-hero",
+	"version": 1,
+	"description": "A polished product screenshot scanned by an animated x-ray band that reveals the underlying component structure as glowing devtools-style bboxes and accessibility outlines. Drag the pointer, or let it auto-sweep \u2014 exactly the feeling of opening the inspector on production.",
+	"dependencies": [
+		"three"
+	],
+	"authorName": "@ybouane",
+	"authorUrl": "https://x.com/ybouane",
+	"tags": [
+		"devtools",
+		"observability",
+		"monitoring",
+		"saas",
+		"screenshot",
+		"three",
+		"shader",
+		"reveal",
+		"x-ray",
+		"wireframe"
+	],
+	"category": "Reveal",
+	"featured": true,
+	"poster": "/images/heroes/debugging-xray-hero.png",
+	"install": {
+		"package": "@crazygl/hero-debugging-xray-hero"
+	},
+	"config": {
+		"managedWidth": true,
+		"innerWidth": 1280,
+		"managedHeight": true,
+		"defaultHeight": 720,
+		"styleInheritance": "none",
+		"usesCanvas": true,
+		"usesWebGL": true,
+		"usesThree": true,
+		"pointerTracking": true,
+		"resizeTracking": true,
+		"interactive": true,
+		"supportsImages": true,
+		"supportsTransparency": true,
+		"supportsFontCustomization": true,
+		"interactivityModes": [
+			"pointer",
+			"none"
+		],
+		"interactivity": "pointer"
+	},
+	"customizer": {
+		"sections": [
+			{
+				"label": "Content",
+				"fields": [
+					{
+						"id": "contentType",
+						"label": "Content Type",
+						"type": "select",
+						"default": "heading",
+						"options": [
+							{
+								"label": "Heading",
+								"value": "heading"
+							},
+							{
+								"label": "Two Columns",
+								"value": "two-columns"
+							},
+							{
+								"label": "Custom",
+								"value": "custom"
+							}
+						]
+					},
+					{
+						"id": "heading",
+						"label": "Heading",
+						"type": "text",
+						"default": "See every render, every leak, every layout shift.",
+						"showWhen": {
+							"contentType": "heading"
+						}
+					},
+					{
+						"id": "subheading",
+						"label": "Subheading",
+						"type": "textarea",
+						"default": "An x-ray for your product. Drag across the screenshot to peel back the polished UI and read the component tree, accessibility outlines, and render-cost hotspots underneath.",
+						"showWhen": {
+							"contentType": "heading"
+						}
+					},
+					{
+						"id": "ctaLabel",
+						"label": "CTA Label",
+						"type": "text",
+						"default": "Open the inspector \u2192",
+						"showWhen": {
+							"contentType": "heading"
+						}
+					},
+					{
+						"id": "onCTAClick",
+						"label": "On click",
+						"type": "text",
+						"default": "",
+						"showWhen": {
+							"contentType": "heading"
+						},
+						"description": "URL to navigate to when the CTA is clicked. From code you can also pass a function \u2014 same prop name, type-detected at runtime."
+					},
+					{
+						"id": "column1",
+						"label": "Column 1",
+						"type": "node",
+						"default": "<h2>Production-grade visibility</h2><p>Every paint, every prop, every accessibility violation \u2014 surfaced as you scan.</p>",
+						"showWhen": {
+							"contentType": "two-columns"
+						}
+					},
+					{
+						"id": "column2",
+						"label": "Column 2",
+						"type": "node",
+						"default": "<h2>Zero overhead</h2><p>Runs in production. Streams to your dashboard. Slows nothing down.</p>",
+						"showWhen": {
+							"contentType": "two-columns"
+						}
+					},
+					{
+						"id": "content",
+						"label": "Content",
+						"type": "node",
+						"default": "<h1>See everything.</h1><p>X-ray your product in real time.</p>",
+						"showWhen": {
+							"contentType": "custom"
+						}
+					}
+				]
+			},
+			{
+				"label": "Screenshot",
+				"fields": [
+					{
+						"id": "screenshot",
+						"label": "Screenshot (PNG/JPG/WebP/AVIF)",
+						"type": "media",
+						"default": "https://crazygl.com/samples/screenshot-dashboard-dark.avif",
+						"description": "The product screenshot the x-ray scans across. Dashboards, IDEs and admin UIs look best \u2014 the more visible structure, the better the reveal."
+					},
+					{
+						"id": "screenshotScale",
+						"label": "Screenshot size",
+						"type": "slider",
+						"default": 1.28,
+						"min": 0.5,
+						"max": 1.6,
+						"step": 0.01,
+						"description": "Scale of the screenshot plane. 1.0 fits the smaller axis; 1.05 pushes it slightly larger for a confident hero presence."
+					},
+					{
+						"id": "screenshotX",
+						"label": "Horizontal position",
+						"type": "slider",
+						"default": 1.5,
+						"min": -1.5,
+						"max": 1.5,
+						"step": 0.05,
+						"unit": "world",
+						"description": "Shift the screenshot left or right so the heading can sit opposite. 0 = centred."
+					},
+					{
+						"id": "screenshotY",
+						"label": "Vertical position",
+						"type": "slider",
+						"default": 0.0,
+						"min": -1.0,
+						"max": 1.0,
+						"step": 0.05,
+						"unit": "world",
+						"description": "Vertical offset of the screenshot."
+					},
+					{
+						"id": "screenshotTilt",
+						"label": "Screen tilt",
+						"type": "slider",
+						"default": 6.5,
+						"min": -30,
+						"max": 30,
+						"step": 0.5,
+						"unit": "\u00b0",
+						"description": "Tilt the screenshot toward (-) or away from (+) the camera. Tiny tilts read as 'product card' rather than 'flat banner'."
+					}
+				]
+			},
+			{
+				"label": "X-Ray scan",
+				"fields": [
+					{
+						"id": "scanMode",
+						"label": "Scan mode",
+						"type": "select",
+						"default": "pointer",
+						"options": [
+							{
+								"label": "Pointer-follow",
+								"value": "pointer"
+							},
+							{
+								"label": "Auto sweep",
+								"value": "auto"
+							},
+							{
+								"label": "Both (auto + pointer override)",
+								"value": "both"
+							}
+						],
+						"description": "How the x-ray band moves across the screenshot. Both mode lets it auto-sweep while idle, then jumps to follow your pointer when you move."
+					},
+					{
+						"id": "scanSpeed",
+						"label": "Auto sweep speed",
+						"type": "slider",
+						"default": 0.35,
+						"min": 0.05,
+						"max": 1.5,
+						"step": 0.01,
+						"description": "Speed of the auto-sweep, in screen-widths per second. 0.3\u20130.5 reads as 'thoughtful inspection'; above 1.0 feels frantic.",
+						"showWhen": {
+							"scanMode": [
+								"auto",
+								"both"
+							]
+						}
+					},
+					{
+						"id": "bandWidth",
+						"label": "Scan band width",
+						"type": "slider",
+						"default": 0.32,
+						"min": 0.05,
+						"max": 0.9,
+						"step": 0.01,
+						"description": "Width of the reveal band as a fraction of the screenshot width. 0.25\u20130.4 reads as 'a tool scanning'; >0.7 reveals the whole image at once."
+					},
+					{
+						"id": "accentColor",
+						"label": "Accent colour",
+						"type": "color",
+						"default": "#5cd5ff",
+						"description": "Tint of the x-ray overlay (devtools blue, cyan, magenta, lime \u2014 pick the one that reads against your screenshot)."
+					}
+				]
+			},
+			{
+				"label": "X-ray source",
+				"fields": [
+					{
+						"id": "xrayMode",
+						"label": "X-ray source",
+						"type": "select",
+						"default": "procedural",
+						"options": [
+							{
+								"label": "Procedural devtools overlay",
+								"value": "procedural"
+							},
+							{
+								"label": "Custom x-ray image",
+								"value": "image"
+							}
+						],
+						"description": "What gets revealed under the scan band. Procedural draws devtools-style bboxes + heatmap in-shader (no extra asset needed). Image swaps that for a second image you provide \u2014 a wireframe, blueprint, code-tree screenshot, schematic \u2014 perfectly aligned under the polished screenshot."
+					},
+					{
+						"id": "xrayImage",
+						"label": "X-ray image (PNG/JPG/WebP/AVIF)",
+						"type": "media",
+						"default": "",
+						"showWhen": {
+							"xrayMode": "image"
+						},
+						"description": "The image revealed under the scan band. Use the same aspect ratio as your screenshot for clean alignment (cover-fit). Leave blank to fall back to the procedural overlay."
+					}
+				]
+			},
+			{
+				"label": "Overlay",
+				"fields": [
+					{
+						"id": "overlayStyle",
+						"label": "Overlay style",
+						"type": "select",
+						"default": "both",
+						"options": [
+							{
+								"label": "Bounding boxes",
+								"value": "bboxes"
+							},
+							{
+								"label": "Render heatmap",
+								"value": "heatmap"
+							},
+							{
+								"label": "Both (boxes + heat)",
+								"value": "both"
+							}
+						],
+						"description": "Bounding boxes are devtools-style outlines; the heatmap glows brighter where the underlying UI region is busier (luminance-driven). Both layered together reads as 'profiler + inspector at once'.",
+						"showWhen": {
+							"xrayMode": "procedural"
+						}
+					},
+					{
+						"id": "overlayDensity",
+						"label": "Overlay density",
+						"type": "slider",
+						"default": 0.6,
+						"min": 0.15,
+						"max": 1.4,
+						"step": 0.02,
+						"description": "Density of the procedural bounding-box grid. 0.4\u20130.7 reads as 'detailed but legible'; pushing higher fills the band with tighter nested boxes.",
+						"showWhen": {
+							"xrayMode": "procedural"
+						}
+					}
+				]
+			},
+			{
+				"label": "Stage",
+				"fields": [
+					{
+						"id": "parallaxStrength",
+						"label": "Pointer parallax",
+						"type": "slider",
+						"default": 0.45,
+						"min": 0,
+						"max": 1,
+						"step": 0.02,
+						"description": "How much the camera drifts with the pointer. 0 = locked; 0.5 = subtle product-shot parallax; 1.0 = playful."
+					},
+					{
+						"id": "bgTop",
+						"label": "Background (top)",
+						"type": "color",
+						"default": "#0a1320",
+						"description": "Top of the radial backdrop behind the screenshot."
+					},
+					{
+						"id": "bgBottom",
+						"label": "Background (bottom)",
+						"type": "color",
+						"default": "#03050b",
+						"description": "Bottom of the radial backdrop."
+					},
+					{
+						"id": "transparentBackground",
+						"label": "Transparent background",
+						"type": "toggle",
+						"default": false,
+						"description": "Drop the backdrop so the hero composes onto a page section below it."
+					}
+				]
+			},
+			{
+				"label": "Typography",
+				"fields": [
+					{
+						"id": "headingFontFamily",
+						"label": "Heading Font",
+						"type": "font",
+						"default": "Inherit",
+						"showWhen": {
+							"contentType": "heading"
+						}
+					}
+				]
+			}
+		]
+	}
+}
